@@ -1,0 +1,41 @@
+[package]
+name = "pingolin-crypto"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+authors = ["Pingolin Team"]
+description = "Zero-knowledge encryption primitives for Pingolin"
+
+# Consumed as a sibling checkout: the auth server and the mobile SDK depend
+# on this crate by relative path (../../../pingolin-crypto), so it must be
+# cloned next to those repositories.
+#
+# This crate inherits from no workspace: dependency versions are pinned
+# here, and every consumer resolves what this file says.
+
+[dependencies]
+argon2 = "0.5"
+chacha20poly1305 = "0.10"
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+ed25519-dalek = { version = "2.2", features = ["rand_core"] }
+blake3 = "1.6"
+rand = "0.8"
+zeroize = { version = "1.8", features = ["derive"] }
+subtle = "2.6"
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+base64 = "0.22"
+hex = "0.4"
+
+# Optional UniFFI for mobile
+uniffi = { version = "0.30", optional = true }
+
+[features]
+default = []
+ffi = ["uniffi"]
+wasm = []
+
+[dev-dependencies]
+proptest = "1"
+criterion = "0.5"
+
